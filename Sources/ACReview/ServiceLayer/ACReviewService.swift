@@ -12,11 +12,19 @@ public protocol ACRequestReviewRule {
     var isShouldDisplayRating: Bool { get }
 }
 
+public class ACRequestStorage {
+    let userDefaults = UserDefaultsHelper.shared
+}
+
 public class ACReviewService {
     private var rule: ACRequestReviewRule
+    private var maxRequestCalls: Int?
+    private var callsCounterService: ACReviewCallsCounterService
     
-    public init(rule: ACRequestReviewRule) {
+    public init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil) {
         self.rule = rule
+        self.maxRequestCalls = maxRequestCalls
+        self.callsCounterService = ACReviewCallsCounterService()
     }
     
     public func setRule(_ rule: ACRequestReviewRule) {
@@ -31,9 +39,25 @@ public class ACReviewService {
             notRequiredFinished?()
             return
         }
+        if let maxRequestCalls = maxRequestCalls {
+            if callsCounterService.getCurrentAttempts() < maxRequestCalls {
+                callReviewController(requiredFinished)
+            } else {
+                notRequiredFinished?()
+            }
+        } else {
+            notRequiredFinished?()
+        }
+    }
+}
+
+private extension ACReviewService {
+    
+    func callReviewController(_ requiredFinished: ((Bool) -> Void)?) {
         if #available(iOS 14.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 SKStoreReviewController.requestReview(in: scene)
+                callsCounterService.incrementAttempt()
                 ACReviewCallVerificationService.shared.startObserver { isPresented in
                     print("finsihed, isPresented - \(isPresented)")
                     requiredFinished?(isPresented)
@@ -41,6 +65,7 @@ public class ACReviewService {
             }
         } else {
             SKStoreReviewController.requestReview()
+            callsCounterService.incrementAttempt()
             ACReviewCallVerificationService.shared.startObserver { isPresented in
                 print("finsihed, isPresented - \(isPresented)")
                 requiredFinished?(isPresented)
@@ -48,4 +73,3 @@ public class ACReviewService {
         }
     }
 }
-

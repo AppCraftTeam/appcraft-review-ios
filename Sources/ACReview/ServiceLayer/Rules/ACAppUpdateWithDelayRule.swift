@@ -8,7 +8,7 @@
 import Foundation
 
 // Показать запрос оценки через определенное время использования новой версии приложения
-public class ACAppUpdateWithDelayRule: ACRequestReviewRule {
+public class ACAppUpdateWithDelayRule: ACRequestStorage, ACRequestReviewRule {
     private let currentVersionKey = "ACReview_afterUpdateDelayRuleCurrentVersion"
     private let totalTimeKey: String = "ACReview_afterUpdateDelayRule_totalTime"
     private var sessionKey: String {
@@ -25,7 +25,7 @@ public class ACAppUpdateWithDelayRule: ACRequestReviewRule {
             return false
         }
         
-        if let savedVersion: String = UserDefaultsHelper.shared.get(forKey: currentVersionKey) {
+        if let savedVersion: String = userDefaults.get(forKey: currentVersionKey) {
             return currentVersion != savedVersion
         }
         
@@ -34,7 +34,7 @@ public class ACAppUpdateWithDelayRule: ACRequestReviewRule {
     
     public func startSession() {
         if isNeedSetSession() {
-            UserDefaultsHelper.shared.set(Date().timeIntervalSince1970, forKey: sessionKey)
+            userDefaults.set(Date().timeIntervalSince1970, forKey: sessionKey)
         }
     }
     
@@ -43,25 +43,25 @@ public class ACAppUpdateWithDelayRule: ACRequestReviewRule {
             return
         }
         let currentTime = Date().timeIntervalSince1970
-        var startSeconds: Double = UserDefaultsHelper.shared.get(forKey: sessionKey) ?? 0.0
+        var startSeconds: Double = userDefaults.get(forKey: sessionKey) ?? 0.0
         let sessionTime = currentTime - startSeconds
         
         self.addToTotalTimeSpent(sessionTime)
     }
     
     public func getTotalSecondsSpent() -> TimeInterval {
-        let value: Double = UserDefaultsHelper.shared.get(forKey: totalTimeKey) ?? 0.0
+        let value: Double = userDefaults.get(forKey: totalTimeKey) ?? 0.0
         return value
     }
     
     public var isShouldDisplayRating: Bool {
-        let currentTimeSpent: TimeInterval = UserDefaultsHelper.shared.get(forKey: totalTimeKey) ?? 0
+        let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
-            UserDefaultsHelper.shared.set(0, forKey: totalTimeKey)
-            UserDefaultsHelper.shared.remove(forKey: sessionKey)
+            userDefaults.set(0, forKey: totalTimeKey)
+            userDefaults.remove(forKey: sessionKey)
             
             if let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                UserDefaultsHelper.shared.set(currentVersion, forKey: currentVersionKey)
+                userDefaults.set(currentVersion, forKey: currentVersionKey)
             }
             
             return true
@@ -74,8 +74,8 @@ public class ACAppUpdateWithDelayRule: ACRequestReviewRule {
 private extension ACAppUpdateWithDelayRule {
     
     func addToTotalTimeSpent(_ time: TimeInterval) {
-        let totalTimeSpent: TimeInterval = UserDefaultsHelper.shared.get(forKey: totalTimeKey) ?? 0.0
+        let totalTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0.0
         let newTotalTimeSpent = totalTimeSpent + time
-        UserDefaultsHelper.shared.set(newTotalTimeSpent, forKey: totalTimeKey)
+        userDefaults.set(newTotalTimeSpent, forKey: totalTimeKey)
     }
 }

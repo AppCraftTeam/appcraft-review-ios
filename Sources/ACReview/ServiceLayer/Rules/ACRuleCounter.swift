@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ACRuleCounter: ACRequestReviewRule {
+public class ACRuleCounter: ACRequestStorage, ACRequestReviewRule {
     private let customFlagKey: String
     private let threshold: Int
     
@@ -17,14 +17,14 @@ public class ACRuleCounter: ACRequestReviewRule {
     }
     
     public func incrementFlag() {
-        UserDefaultsHelper.shared.incrementNum(forKey: customFlagKey)
+        userDefaults.incrementNum(forKey: customFlagKey)
     }
     
     public var isShouldDisplayRating: Bool {
-        let currentFlag: Int = UserDefaultsHelper.shared.get(forKey: customFlagKey) ?? 0
+        let currentFlag: Int = userDefaults.get(forKey: customFlagKey) ?? 0
         
         if currentFlag >= threshold {
-            UserDefaultsHelper.shared.set(0, forKey: customFlagKey)
+            userDefaults.set(0, forKey: customFlagKey)
             return true
         }
         

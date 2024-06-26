@@ -7,25 +7,25 @@
 
 import Foundation
 
-public class ACAppUpdateRule: ACRequestReviewRule {
+public class ACAppUpdateRule: ACRequestStorage, ACRequestReviewRule {
     private let currentVersionKey = "ACReview_afterUpdateRuleCurrentVersion"
     
-    public init() {}
+    public override init() {}
     
     public var isShouldDisplayRating: Bool {
         guard let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
             return false
         }
         
-        if let savedVersion: String = UserDefaultsHelper.shared.get(forKey: currentVersionKey) {
+        if let savedVersion: String = userDefaults.get(forKey: currentVersionKey) {
             if currentVersion != savedVersion {
-                UserDefaultsHelper.shared.set(currentVersion, forKey: currentVersionKey)
+                userDefaults.set(currentVersion, forKey: currentVersionKey)
                 return true
             }
             return false
         }
         
-        UserDefaultsHelper.shared.set(currentVersion, forKey: currentVersionKey)
+        userDefaults.set(currentVersion, forKey: currentVersionKey)
         
         return false
     }

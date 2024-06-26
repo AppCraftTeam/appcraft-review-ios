@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ACTimeSpentRule: ACRequestReviewRule {
+public class ACTimeSpentRule: ACRequestStorage, ACRequestReviewRule {
     private let customFlagKey: String
     private var customFlagSessionKey: String {
         customFlagKey + "_session"
@@ -20,26 +20,26 @@ public class ACTimeSpentRule: ACRequestReviewRule {
     }
     
     public func startSession() {
-        UserDefaultsHelper.shared.set(Date().timeIntervalSince1970, forKey: customFlagSessionKey)
+        userDefaults.set(Date().timeIntervalSince1970, forKey: customFlagSessionKey)
     }
     
     public func endSession() {
         let currentTime = Date().timeIntervalSince1970
-        var startSeconds: Double = UserDefaultsHelper.shared.get(forKey: customFlagSessionKey) ?? 0.0
+        var startSeconds: Double = userDefaults.get(forKey: customFlagSessionKey) ?? 0.0
         let sessionTime = currentTime - startSeconds
         
         self.addToTotalTimeSpent(sessionTime)
     }
     
     public func getTotalSecondsSpent() -> TimeInterval {
-        let value: Double = UserDefaultsHelper.shared.get(forKey: customFlagKey) ?? 0.0
+        let value: Double = userDefaults.get(forKey: customFlagKey) ?? 0.0
         return value
     }
     
     public var isShouldDisplayRating: Bool {
-        let currentTimeSpent: TimeInterval = UserDefaultsHelper.shared.get(forKey: customFlagKey) ?? 0
+        let currentTimeSpent: TimeInterval = userDefaults.get(forKey: customFlagKey) ?? 0
         if currentTimeSpent >= requiredTime {
-            UserDefaultsHelper.shared.set(0, forKey: customFlagKey)
+            userDefaults.set(0, forKey: customFlagKey)
             return true
         }
         
@@ -50,8 +50,8 @@ public class ACTimeSpentRule: ACRequestReviewRule {
 private extension ACTimeSpentRule {
     
     func addToTotalTimeSpent(_ time: TimeInterval) {
-        let totalTimeSpent: TimeInterval = UserDefaultsHelper.shared.get(forKey: customFlagKey) ?? 0.0
+        let totalTimeSpent: TimeInterval = userDefaults.get(forKey: customFlagKey) ?? 0.0
         let newTotalTimeSpent = totalTimeSpent + time
-        UserDefaultsHelper.shared.set(newTotalTimeSpent, forKey: customFlagKey)
+        userDefaults.set(newTotalTimeSpent, forKey: customFlagKey)
     }
 }

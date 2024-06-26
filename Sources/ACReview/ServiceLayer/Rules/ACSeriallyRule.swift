@@ -7,8 +7,7 @@
 
 import Foundation
 
-public class ACSeriallyRule: ACRequestReviewRule {
-    private let userDefaults = UserDefaultsHelper.shared
+public class ACSeriallyRule: ACRequestStorage, ACRequestReviewRule {
     private let actionFrequency: ActionFrequency
     
     public init(actionFrequency: ActionFrequency) {
