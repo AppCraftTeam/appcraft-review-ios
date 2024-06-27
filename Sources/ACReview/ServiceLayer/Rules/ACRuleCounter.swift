@@ -22,7 +22,6 @@ public class ACRuleCounter: ACRequestStorage, ACRequestReviewRule {
     
     public var isShouldDisplayRating: Bool {
         let currentFlag: Int = userDefaults.get(forKey: customFlagKey) ?? 0
-        
         if currentFlag >= threshold {
             userDefaults.set(0, forKey: customFlagKey)
             return true

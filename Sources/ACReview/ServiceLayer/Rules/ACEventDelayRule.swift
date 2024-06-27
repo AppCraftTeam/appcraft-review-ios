@@ -36,9 +36,7 @@ public class ACEventDelayRule: ACRequestStorage, ACRequestReviewRule, ACDelayRul
         }
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
-            userDefaults.set(0, forKey: totalTimeKey)
-            userDefaults.remove(forKey: sessionKey)
-            
+            resetTime()
             return true
         }
         

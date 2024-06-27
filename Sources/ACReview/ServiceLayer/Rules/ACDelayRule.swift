@@ -40,6 +40,11 @@ public extension ACDelayRule {
         
         self.addToTotalTimeSpent(sessionTime)
     }
+    
+    func resetTime() {
+        userDefaults.set(0, forKey: totalTimeKey)
+        userDefaults.remove(forKey: sessionKey)
+    }
 }
 
 private extension ACDelayRule {

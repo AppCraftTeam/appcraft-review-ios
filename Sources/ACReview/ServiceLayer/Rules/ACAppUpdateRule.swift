@@ -13,7 +13,7 @@ public class ACAppUpdateRule: ACRequestStorage, ACRequestReviewRule {
     public override init() {}
     
     public var isShouldDisplayRating: Bool {
-        guard let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+        guard let currentVersion = Bundle.main.currentVersion else {
             return false
         }
         
