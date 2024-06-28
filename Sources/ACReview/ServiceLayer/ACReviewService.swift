@@ -20,7 +20,18 @@ public class ACReviewService {
     private var rules: [ACRequestReviewRule]
     private var maxRequestCalls: Int?
     private var callsCounterService: ACReviewCallsCounterService
-    
+    private var reviewLastDateKey = "ACReview_review_last_call_date"
+
+    public private(set) var reviewLastCallDate: Date? {
+        get {
+            let savedValue: Date? = UserDefaultsHelper.shared.get(forKey: reviewLastDateKey)
+            return savedValue
+        }
+        set {
+            UserDefaultsHelper.shared.set(newValue, forKey: reviewLastDateKey)
+        }
+    }
+
     public init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil) {
         self.rules = [rule]
         self.maxRequestCalls = maxRequestCalls
@@ -68,6 +79,7 @@ private extension ACReviewService {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 SKStoreReviewController.requestReview(in: scene)
                 callsCounterService.incrementAttempt()
+                reviewLastCallDate = Date()
                 ACReviewCallVerificationService.shared.startObserver { isPresented in
                     print("finsihed, isPresented - \(isPresented)")
                     requiredFinished?(isPresented)
@@ -76,6 +88,7 @@ private extension ACReviewService {
         } else {
             SKStoreReviewController.requestReview()
             callsCounterService.incrementAttempt()
+            reviewLastCallDate = Date()
             ACReviewCallVerificationService.shared.startObserver { isPresented in
                 print("finsihed, isPresented - \(isPresented)")
                 requiredFinished?(isPresented)
