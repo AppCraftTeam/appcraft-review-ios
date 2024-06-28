@@ -17,25 +17,35 @@ public class ACRequestStorage {
 }
 
 public class ACReviewService {
-    private var rule: ACRequestReviewRule
+    private var rules: [ACRequestReviewRule]
     private var maxRequestCalls: Int?
     private var callsCounterService: ACReviewCallsCounterService
     
     public init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil) {
-        self.rule = rule
+        self.rules = [rule]
+        self.maxRequestCalls = maxRequestCalls
+        self.callsCounterService = ACReviewCallsCounterService()
+    }
+    
+    public init(rules: [ACRequestReviewRule], maxRequestCalls: Int? = nil) {
+        self.rules = rules
         self.maxRequestCalls = maxRequestCalls
         self.callsCounterService = ACReviewCallsCounterService()
     }
     
     public func setRule(_ rule: ACRequestReviewRule) {
-        self.rule = rule
+        self.rules = [rule]
+    }
+    
+    public func setRules(_ rules: [ACRequestReviewRule]) {
+        self.rules = rules
     }
     
     public func tryToShowRating(
         notRequiredFinished: (() -> Void)? = nil,
         requiredFinished: ((_ isPresented: Bool) -> Void)? = nil
     ) {
-        guard rule.isShouldDisplayRating else {
+        guard let rule = rules.first(where: { $0.isShouldDisplayRating }) else {
             notRequiredFinished?()
             return
         }
