@@ -21,7 +21,7 @@ public class ACReviewService {
     private var maxRequestCalls: Int?
     private var callsCounterService: ACReviewCallsCounterService
     private var reviewLastDateKey = "ACReview_review_last_call_date"
-
+    
     public private(set) var reviewLastCallDate: Date? {
         get {
             let savedValue: Date? = UserDefaultsHelper.shared.get(forKey: reviewLastDateKey)
@@ -31,17 +31,15 @@ public class ACReviewService {
             UserDefaultsHelper.shared.set(newValue, forKey: reviewLastDateKey)
         }
     }
-
-    public init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil) {
-        self.rules = [rule]
-        self.maxRequestCalls = maxRequestCalls
-        self.callsCounterService = ACReviewCallsCounterService()
-    }
     
     public init(rules: [ACRequestReviewRule], maxRequestCalls: Int? = nil) {
         self.rules = rules
         self.maxRequestCalls = maxRequestCalls
         self.callsCounterService = ACReviewCallsCounterService()
+    }
+    
+    public convenience init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil) {
+        self.init(rules: [rule], maxRequestCalls: maxRequestCalls)
     }
     
     public func setRule(_ rule: ACRequestReviewRule) {
@@ -73,26 +71,25 @@ public class ACReviewService {
 }
 
 private extension ACReviewService {
-    
+
     func callReviewController(_ requiredFinished: ((Bool) -> Void)?) {
         if #available(iOS 14.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 SKStoreReviewController.requestReview(in: scene)
-                callsCounterService.incrementAttempt()
-                reviewLastCallDate = Date()
-                ACReviewCallVerificationService.shared.startObserver { isPresented in
-                    print("finsihed, isPresented - \(isPresented)")
-                    requiredFinished?(isPresented)
-                }
+                processingAttemptCallRequest(requiredFinished)
             }
         } else {
             SKStoreReviewController.requestReview()
-            callsCounterService.incrementAttempt()
-            reviewLastCallDate = Date()
-            ACReviewCallVerificationService.shared.startObserver { isPresented in
-                print("finsihed, isPresented - \(isPresented)")
-                requiredFinished?(isPresented)
-            }
+            processingAttemptCallRequest(requiredFinished)
+        }
+    }
+    
+    func processingAttemptCallRequest(_ requiredFinished: ((Bool) -> Void)?) {
+        callsCounterService.incrementAttempt()
+        reviewLastCallDate = Date()
+        ACReviewCallVerificationService.shared.startObserver { isPresented in
+            print("finsihed, isPresented - \(isPresented)")
+            requiredFinished?(isPresented)
         }
     }
 }
