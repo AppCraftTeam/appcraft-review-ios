@@ -16,7 +16,7 @@ public enum ActionFrequency {
     case monthly(dayOfMonth: Int)
     /// Ежедневно с промежутком в <x> дней
     case daily(everyXDays: Int)
-    /// Еженедельно в <x> день недели
+    /// Еженедельно
     case weekly
     /// Ежеквартально
     case quarterly

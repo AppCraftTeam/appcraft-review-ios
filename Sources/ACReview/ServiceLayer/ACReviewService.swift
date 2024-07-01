@@ -87,7 +87,7 @@ private extension ACReviewService {
     func processingAttemptCallRequest(_ requiredFinished: ((Bool) -> Void)?) {
         callsCounterService.incrementAttempt()
         reviewLastCallDate = Date()
-        ACReviewCallVerificationService.shared.startObserver { isPresented in
+        ACReviewCallVerificationService.shared.startObserving { isPresented in
             print("finsihed, isPresented - \(isPresented)")
             requiredFinished?(isPresented)
         }

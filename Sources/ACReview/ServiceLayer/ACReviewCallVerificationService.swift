@@ -8,18 +8,20 @@
 import UIKit
 import StoreKit
 
+typealias ACCallServiceCallback = ((_ isPresented: Bool) -> Void)
+
 class ACReviewCallVerificationService {
     
     static let shared = ACReviewCallVerificationService()
     var maxWaitingSeconds: Double = 5.0
     
     private var windowVisibleObserver: NSObjectProtocol?
-    private var timer: Timer?
-    private var callback: ((_ isPresented: Bool) -> Void)?
+    private var timer: DispatchSourceTimer?
+    private var callback: ACCallServiceCallback?
     
     private init() {}
     
-    func startObserver(_ callback: @escaping (_ isPresented: Bool) -> Void) {
+    func startObserving(callback: @escaping ACCallServiceCallback) {
         self.callback = callback
         windowVisibleObserver = NotificationCenter.default.addObserver(
             forName: UIWindow.didBecomeVisibleNotification,
@@ -31,12 +33,13 @@ class ACReviewCallVerificationService {
         startTimer()
     }
     
-    func finishObserve() {
+    func stopObserving() {
         if let observer = windowVisibleObserver {
             NotificationCenter.default.removeObserver(observer)
+            windowVisibleObserver = nil
         }
         
-        timer?.invalidate()
+        timer?.cancel()
         timer = nil
         callback = nil
     }
@@ -46,13 +49,16 @@ private extension ACReviewCallVerificationService {
     
     func handleWindowDidBecomeVisible() {
         callback?(true)
-        finishObserve()
+        stopObserving()
     }
     
     func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: maxWaitingSeconds, repeats: false) { [weak self] _ in
+        timer = DispatchSource.makeTimerSource()
+        timer?.schedule(deadline: .now() + maxWaitingSeconds)
+        timer?.setEventHandler { [weak self] in
             self?.callback?(false)
-            self?.finishObserve()
+            self?.stopObserving()
         }
+        timer?.resume()
     }
 }
