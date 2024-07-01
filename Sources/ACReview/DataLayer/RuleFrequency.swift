@@ -8,10 +8,20 @@
 import Foundation
 
 public enum ActionFrequency {
+    /// Ежегодно
     case onceYear
+    /// Каждые <x> месяцев
     case onceEveryMonths(month: Int)
+    /// Ежемесечно в указанный день недели
     case monthly(dayOfMonth: Int)
+    /// Ежедневно с промежутком в <x> дней
     case daily(everyXDays: Int)
+    /// Еженедельно в <x> день недели
+    case weekly
+    /// Ежеквартально
+    case quarterly
+    ////// Раз в две недели
+    case twoWeekly
     
     var key: String {
         switch self {
@@ -23,6 +33,12 @@ public enum ActionFrequency {
             return "ACReview_monthly_\(dayOfMonth)"
         case let .daily(everyXDays):
             return "ACReview_daily_\(everyXDays)"
+        case .weekly:
+            return "ACReview_weekly"
+        case .quarterly:
+            return "ACReview_quarterly"
+        case .twoWeekly:
+            return "ACReview_twoWeekly"
         }
     }
 }
