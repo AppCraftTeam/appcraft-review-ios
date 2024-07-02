@@ -15,7 +15,6 @@ public protocol ACRequestReviewRule {
 open class ACReviewService {
     private var rules: [ACRequestReviewRule]
     private var maxRequestCalls: Int?
-    private var callsCounterService: ACReviewCallsCounterService
     private var reviewLastDateKey = "ACReview_review_last_call_date"
     
     open private(set) var reviewLastCallDate: Date? {
@@ -28,14 +27,16 @@ open class ACReviewService {
         }
     }
     
-    public init(rules: [ACRequestReviewRule], maxRequestCalls: Int? = nil) {
+    open var callsCounterService: ACReviewCallsCounter
+
+    public init(rules: [ACRequestReviewRule], maxRequestCalls: Int? = nil, callsCounterService: ACReviewCallsCounter = ACReviewCallsCounterService()) {
         self.rules = rules
         self.maxRequestCalls = maxRequestCalls
-        self.callsCounterService = ACReviewCallsCounterService()
+        self.callsCounterService = callsCounterService
     }
     
-    public convenience init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil) {
-        self.init(rules: [rule], maxRequestCalls: maxRequestCalls)
+    public convenience init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil, callsCounterService: ACReviewCallsCounter = ACReviewCallsCounterService()) {
+        self.init(rules: [rule], maxRequestCalls: maxRequestCalls, callsCounterService: callsCounterService)
     }
     
     open func setRule(_ rule: ACRequestReviewRule) {
