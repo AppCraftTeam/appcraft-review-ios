@@ -34,7 +34,7 @@ open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
         return false
     }
     
-    open var isShouldDisplayRating: Bool {
+    open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
             resetTime()
@@ -42,10 +42,11 @@ open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
                 userDefaults.set(currentVersion, forKey: currentVersionKey)
             }
             
-            return true
+            completion(true)
+            return
         }
         
-        return false
+        completion(false)
     }
     
     open func setCondition(_ val: Bool) {}

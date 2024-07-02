@@ -37,14 +37,15 @@ open class ACTimeSpentRule: ACRequestReviewRule {
         return value
     }
     
-    open var isShouldDisplayRating: Bool {
+    open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: customFlagKey) ?? 0
         if currentTimeSpent >= requiredTime {
             userDefaults.set(0, forKey: customFlagKey)
-            return true
+            completion(true)
+            return
         }
         
-        return false
+        completion(false)
     }
 }
 

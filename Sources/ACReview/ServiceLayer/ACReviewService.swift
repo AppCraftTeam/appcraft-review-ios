@@ -9,7 +9,7 @@ import Foundation
 import StoreKit
 
 public protocol ACRequestReviewRule {
-    var isShouldDisplayRating: Bool { get }
+    func shouldDisplayRating(_ completion: @escaping (Bool) -> Void)
 }
 
 open class ACReviewService {
@@ -28,7 +28,7 @@ open class ACReviewService {
     }
     
     open var callsCounterService: ACReviewCallsCounter
-
+    
     public init(rules: [ACRequestReviewRule], maxRequestCalls: Int? = nil, callsCounterService: ACReviewCallsCounter = ACReviewCallsCounterService()) {
         self.rules = rules
         self.maxRequestCalls = maxRequestCalls
@@ -51,24 +51,43 @@ open class ACReviewService {
         notRequiredFinished: (() -> Void)? = nil,
         requiredFinished: ((_ isPresented: Bool) -> Void)? = nil
     ) {
-        guard let rule = rules.first(where: { $0.isShouldDisplayRating }) else {
-            notRequiredFinished?()
-            return
-        }
-        if let maxRequestCalls = maxRequestCalls {
-            if callsCounterService.getCurrentAttempts() < maxRequestCalls {
-                callReviewController(requiredFinished)
-            } else {
-                notRequiredFinished?()
+        let dispatchGroup = DispatchGroup()
+        var shouldDisplay = false
+        
+        for rule in rules {
+            if shouldDisplay {
+                break
             }
-        } else {
-            notRequiredFinished?()
+            dispatchGroup.enter()
+            rule.shouldDisplayRating { result in
+                if result {
+                    shouldDisplay = true
+                }
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            guard shouldDisplay else {
+                notRequiredFinished?()
+                return
+            }
+            
+            if let maxRequestCalls = self.maxRequestCalls {
+                if self.callsCounterService.getCurrentAttempts() < maxRequestCalls {
+                    self.callReviewController(requiredFinished)
+                } else {
+                    notRequiredFinished?()
+                }
+            } else {
+                self.callReviewController(requiredFinished)
+            }
         }
     }
 }
 
 private extension ACReviewService {
-
+    
     func callReviewController(_ requiredFinished: ((Bool) -> Void)?) {
         if #available(iOS 14.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {

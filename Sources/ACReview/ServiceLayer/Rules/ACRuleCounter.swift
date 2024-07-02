@@ -12,7 +12,7 @@ open class ACRuleCounter: ACRequestReviewRule {
     private let customFlagKey: String
     private let threshold: Int
     
-    public init(customFlagKey: String, threshold: Int = 5) {
+    public init(customFlagKey: String, threshold: Int) {
         self.customFlagKey = customFlagKey
         self.threshold = threshold
     }
@@ -21,13 +21,14 @@ open class ACRuleCounter: ACRequestReviewRule {
         userDefaults.incrementNum(forKey: customFlagKey)
     }
     
-    open var isShouldDisplayRating: Bool {
+    open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
         let currentFlag: Int = userDefaults.get(forKey: customFlagKey) ?? 0
         if currentFlag >= threshold {
             userDefaults.set(0, forKey: customFlagKey)
-            return true
+            completion(true)
+            return
         }
         
-        return false
+        completion(false)
     }
 }

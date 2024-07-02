@@ -31,16 +31,18 @@ open class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
         userDefaults.set(val, forKey: conditionKey)
     }
 
-    open var isShouldDisplayRating: Bool {
+    open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
         guard isActiveCondition else {
-            return false
+            completion(false)
+            return
         }
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
             resetTime()
-            return true
+            completion(true)
+            return
         }
         
-        return false
+        completion(false)
     }
 }

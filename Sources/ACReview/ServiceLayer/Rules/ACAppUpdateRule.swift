@@ -10,24 +10,26 @@ import Foundation
 open class ACAppUpdateRule: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let currentVersionKey = "ACReview_afterUpdateRuleCurrentVersion"
-
+    
     public init() {}
     
-    open var isShouldDisplayRating: Bool {
+    open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
         guard let currentVersion = Bundle.main.currentVersion else {
-            return false
+            completion(false)
+            return
         }
         
         if let savedVersion: String = userDefaults.get(forKey: currentVersionKey) {
             if currentVersion != savedVersion {
                 userDefaults.set(currentVersion, forKey: currentVersionKey)
-                return true
+                completion(true)
+                return
             }
-            return false
+            completion(false)
+            return
         }
         
         userDefaults.set(currentVersion, forKey: currentVersionKey)
-        
-        return false
+        completion(false)
     }
 }

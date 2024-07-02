@@ -15,13 +15,14 @@ open class ACSeriallyRule: ACRequestReviewRule {
         self.actionFrequency = actionFrequency
     }
     
-    open var isShouldDisplayRating: Bool {
+    open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
         let lastPromptDateKey = actionFrequency.key
         
         guard let lastPromptDate: Date = userDefaults.get(forKey: lastPromptDateKey) else {
             // App first launch date
             userDefaults.set(Date(), forKey: lastPromptDateKey)
-            return false
+            completion(false)
+            return
         }
         
         let isShouldCallRating = isShouldCallRating(
@@ -30,7 +31,7 @@ open class ACSeriallyRule: ACRequestReviewRule {
             lastPromptDateKey: lastPromptDateKey
         )
         
-        return isShouldCallRating
+        completion(isShouldCallRating)
     }
 }
 
