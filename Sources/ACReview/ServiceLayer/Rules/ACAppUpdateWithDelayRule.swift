@@ -8,12 +8,14 @@
 import Foundation
 
 // Показать запрос оценки через определенное время использования новой версии приложения
-public class ACAppUpdateWithDelayRule: ACRequestStorage, ACRequestReviewRule, ACDelayRule {
-    var currentVersionKey = "ACReview_afterUpdateDelayRuleCurrentVersion"
-    public var totalTimeKey: String = "ACReview_afterUpdateDelayRule_totalTime"
+public class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
+    private let userDefaults = ACUserDefaultsService.shared
+    private var currentVersionKey = "ACReview_afterUpdateDelayRuleCurrentVersion"
+    
     public var sessionKey: String {
         totalTimeKey + "_session"
     }
+    public var totalTimeKey: String = "ACReview_afterUpdateDelayRule_totalTime"
     public var minimumUsageTime: TimeInterval
     
     public init(minimumUsageTimeInMinutes: TimeInterval) {

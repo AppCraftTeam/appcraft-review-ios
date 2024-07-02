@@ -7,7 +7,8 @@
 
 import Foundation
 
-public class ACTimeSpentRule: ACRequestStorage, ACRequestReviewRule {
+public class ACTimeSpentRule: ACRequestReviewRule {
+    private let userDefaults = ACUserDefaultsService.shared
     private let customFlagKey: String
     private var customFlagSessionKey: String {
         customFlagKey + "_session"

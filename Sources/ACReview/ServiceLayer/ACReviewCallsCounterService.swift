@@ -7,9 +7,10 @@
 
 import Foundation
 
-public class ACReviewCallsCounterService: ACRequestStorage {
+public class ACReviewCallsCounterService {
+    private let userDefaults = ACUserDefaultsService.shared
     private let attemptsKey = "ACReview_reviewCallsCounterService"
-    
+
     public func incrementAttempt() {
         userDefaults.incrementNum(forKey: attemptsKey)
     }

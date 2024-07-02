@@ -1,5 +1,5 @@
 //
-//  RuleFrequency.swift
+//  ACActionFrequency.swift
 //
 //
 //  Created by Pavel Moslienko on 24.06.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ActionFrequency {
+public enum ACActionFrequency {
     /// Ежегодно
     case onceYear
     /// Каждые <x> месяцев

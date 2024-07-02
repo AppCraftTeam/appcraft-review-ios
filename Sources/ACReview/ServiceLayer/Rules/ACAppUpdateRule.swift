@@ -7,10 +7,11 @@
 
 import Foundation
 
-public class ACAppUpdateRule: ACRequestStorage, ACRequestReviewRule {
+public class ACAppUpdateRule: ACRequestReviewRule {
+    private let userDefaults = ACUserDefaultsService.shared
     private let currentVersionKey = "ACReview_afterUpdateRuleCurrentVersion"
-    
-    public override init() {}
+
+    public init() {}
     
     public var isShouldDisplayRating: Bool {
         guard let currentVersion = Bundle.main.currentVersion else {

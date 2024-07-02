@@ -7,8 +7,9 @@
 
 import Foundation
 
-public class ACEventDelayRule: ACRequestStorage, ACRequestReviewRule, ACDelayRule {
-    
+public class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
+    private let userDefaults = ACUserDefaultsService.shared
+
     public var conditionKey: String
     public var totalTimeKey: String
     public var sessionKey: String

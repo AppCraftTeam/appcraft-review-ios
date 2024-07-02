@@ -12,10 +12,6 @@ public protocol ACRequestReviewRule {
     var isShouldDisplayRating: Bool { get }
 }
 
-public class ACRequestStorage {
-    let userDefaults = UserDefaultsHelper.shared
-}
-
 public class ACReviewService {
     private var rules: [ACRequestReviewRule]
     private var maxRequestCalls: Int?
@@ -24,11 +20,11 @@ public class ACReviewService {
     
     public private(set) var reviewLastCallDate: Date? {
         get {
-            let savedValue: Date? = UserDefaultsHelper.shared.get(forKey: reviewLastDateKey)
+            let savedValue: Date? = ACUserDefaultsService.shared.get(forKey: reviewLastDateKey)
             return savedValue
         }
         set {
-            UserDefaultsHelper.shared.set(newValue, forKey: reviewLastDateKey)
+            ACUserDefaultsService.shared.set(newValue, forKey: reviewLastDateKey)
         }
     }
     

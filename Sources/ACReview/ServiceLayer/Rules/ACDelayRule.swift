@@ -11,7 +11,7 @@ import Foundation
  пример - после того как перешли на определенный экран или выполнили определенное действие сохранить isActiveCondition,
  после чего по условию нужно еще 5 минут пользоваться приложением (minimumUsageTime) (время сохраняется между закрытием приложения)
  */
-public protocol ACDelayRule: ACRequestStorage {
+public protocol ACDelayRule {
     var isActiveCondition: Bool { get }
     var totalTimeKey: String { get set }
     var sessionKey: String { get }
@@ -26,7 +26,7 @@ public extension ACDelayRule {
     
     func startSession() {
         if isActiveCondition {
-            userDefaults.set(Date().timeIntervalSince1970, forKey: sessionKey)
+            ACUserDefaultsService.shared.set(Date().timeIntervalSince1970, forKey: sessionKey)
         }
     }
     
@@ -35,23 +35,23 @@ public extension ACDelayRule {
             return
         }
         let currentTime = Date().timeIntervalSince1970
-        var startSeconds: Double = userDefaults.get(forKey: sessionKey) ?? 0.0
+        var startSeconds: Double = ACUserDefaultsService.shared.get(forKey: sessionKey) ?? 0.0
         let sessionTime = currentTime - startSeconds
         
         self.addToTotalTimeSpent(sessionTime)
     }
     
     func resetTime() {
-        userDefaults.set(0, forKey: totalTimeKey)
-        userDefaults.remove(forKey: sessionKey)
+        ACUserDefaultsService.shared.set(0, forKey: totalTimeKey)
+        ACUserDefaultsService.shared.remove(forKey: sessionKey)
     }
 }
 
 private extension ACDelayRule {
     
     func addToTotalTimeSpent(_ time: TimeInterval) {
-        let totalTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0.0
+        let totalTimeSpent: TimeInterval = ACUserDefaultsService.shared.get(forKey: totalTimeKey) ?? 0.0
         let newTotalTimeSpent = totalTimeSpent + time
-        userDefaults.set(newTotalTimeSpent, forKey: totalTimeKey)
+        ACUserDefaultsService.shared.set(newTotalTimeSpent, forKey: totalTimeKey)
     }
 }

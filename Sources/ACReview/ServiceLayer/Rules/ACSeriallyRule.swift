@@ -7,10 +7,11 @@
 
 import Foundation
 
-public class ACSeriallyRule: ACRequestStorage, ACRequestReviewRule {
-    private let actionFrequency: ActionFrequency
-    
-    public init(actionFrequency: ActionFrequency) {
+public class ACSeriallyRule: ACRequestReviewRule {
+    private let userDefaults = ACUserDefaultsService.shared
+    private let actionFrequency: ACActionFrequency
+
+    public init(actionFrequency: ACActionFrequency) {
         self.actionFrequency = actionFrequency
     }
     
@@ -35,7 +36,7 @@ public class ACSeriallyRule: ACRequestStorage, ACRequestReviewRule {
 
 private extension ACSeriallyRule {
     
-    func isShouldCallRating(with actionFrequency: ActionFrequency, lastPromptDate: Date, lastPromptDateKey: String) -> Bool {
+    func isShouldCallRating(with actionFrequency: ACActionFrequency, lastPromptDate: Date, lastPromptDateKey: String) -> Bool {
         let calendar = Calendar.current
         let currentDate = Date()
         

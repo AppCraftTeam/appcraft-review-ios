@@ -7,7 +7,8 @@
 
 import Foundation
 
-public class ACRuleCounter: ACRequestStorage, ACRequestReviewRule {
+public class ACRuleCounter: ACRequestReviewRule {
+    private let userDefaults = ACUserDefaultsService.shared
     private let customFlagKey: String
     private let threshold: Int
     

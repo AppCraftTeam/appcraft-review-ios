@@ -1,5 +1,5 @@
 //
-//  UserDefaultsService.swift
+//  ACUserDefaultsService.swift
 //
 //
 //  Created by Pavel Moslienko on 21.06.2024.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-public class UserDefaultsHelper {
+public class ACUserDefaultsService {
     
-    public static let shared = UserDefaultsHelper()
+    public static let shared = ACUserDefaultsService()
     private let userDefaults = UserDefaults.standard
     
     private init() {}
