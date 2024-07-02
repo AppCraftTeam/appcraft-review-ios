@@ -12,13 +12,13 @@ public protocol ACRequestReviewRule {
     var isShouldDisplayRating: Bool { get }
 }
 
-public class ACReviewService {
+open class ACReviewService {
     private var rules: [ACRequestReviewRule]
     private var maxRequestCalls: Int?
     private var callsCounterService: ACReviewCallsCounterService
     private var reviewLastDateKey = "ACReview_review_last_call_date"
     
-    public private(set) var reviewLastCallDate: Date? {
+    open private(set) var reviewLastCallDate: Date? {
         get {
             let savedValue: Date? = ACUserDefaultsService.shared.get(forKey: reviewLastDateKey)
             return savedValue
@@ -38,15 +38,15 @@ public class ACReviewService {
         self.init(rules: [rule], maxRequestCalls: maxRequestCalls)
     }
     
-    public func setRule(_ rule: ACRequestReviewRule) {
+    open func setRule(_ rule: ACRequestReviewRule) {
         self.rules = [rule]
     }
     
-    public func setRules(_ rules: [ACRequestReviewRule]) {
+    open func setRules(_ rules: [ACRequestReviewRule]) {
         self.rules = rules
     }
     
-    public func tryToShowRating(
+    open func tryToShowRating(
         notRequiredFinished: (() -> Void)? = nil,
         requiredFinished: ((_ isPresented: Bool) -> Void)? = nil
     ) {
@@ -84,7 +84,6 @@ private extension ACReviewService {
         callsCounterService.incrementAttempt()
         reviewLastCallDate = Date()
         ACReviewCallVerificationService.shared.startObserving { isPresented in
-            print("finsihed, isPresented - \(isPresented)")
             requiredFinished?(isPresented)
         }
     }

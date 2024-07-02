@@ -7,13 +7,13 @@
 
 import Foundation
 
-public class ACAppUpdateRule: ACRequestReviewRule {
+open class ACAppUpdateRule: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let currentVersionKey = "ACReview_afterUpdateRuleCurrentVersion"
 
     public init() {}
     
-    public var isShouldDisplayRating: Bool {
+    open var isShouldDisplayRating: Bool {
         guard let currentVersion = Bundle.main.currentVersion else {
             return false
         }

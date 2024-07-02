@@ -8,21 +8,21 @@
 import Foundation
 
 // Показать запрос оценки через определенное время использования новой версии приложения
-public class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
+open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
     private let userDefaults = ACUserDefaultsService.shared
     private var currentVersionKey = "ACReview_afterUpdateDelayRuleCurrentVersion"
     
-    public var sessionKey: String {
+    open var sessionKey: String {
         totalTimeKey + "_session"
     }
-    public var totalTimeKey: String = "ACReview_afterUpdateDelayRule_totalTime"
-    public var minimumUsageTime: TimeInterval
+    open var totalTimeKey: String = "ACReview_afterUpdateDelayRule_totalTime"
+    open var minimumUsageTime: TimeInterval
     
     public init(minimumUsageTimeInMinutes: TimeInterval) {
         self.minimumUsageTime = minimumUsageTimeInMinutes * 60
     }
     
-    public var isActiveCondition: Bool {
+    open var isActiveCondition: Bool {
         guard let currentVersion = Bundle.main.currentVersion else {
             return false
         }
@@ -34,7 +34,7 @@ public class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
         return false
     }
     
-    public var isShouldDisplayRating: Bool {
+    open var isShouldDisplayRating: Bool {
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
             resetTime()
@@ -48,5 +48,5 @@ public class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
         return false
     }
     
-    public func setCondition(_ val: Bool) {}
+    open func setCondition(_ val: Bool) {}
 }

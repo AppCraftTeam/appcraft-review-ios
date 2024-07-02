@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ACSeriallyRule: ACRequestReviewRule {
+open class ACSeriallyRule: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let actionFrequency: ACActionFrequency
 
@@ -15,7 +15,7 @@ public class ACSeriallyRule: ACRequestReviewRule {
         self.actionFrequency = actionFrequency
     }
     
-    public var isShouldDisplayRating: Bool {
+    open var isShouldDisplayRating: Bool {
         let lastPromptDateKey = actionFrequency.key
         
         guard let lastPromptDate: Date = userDefaults.get(forKey: lastPromptDateKey) else {

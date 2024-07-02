@@ -7,20 +7,20 @@
 
 import Foundation
 
-public class ACReviewCallsCounterService {
+open class ACReviewCallsCounterService {
     private let userDefaults = ACUserDefaultsService.shared
     private let attemptsKey = "ACReview_reviewCallsCounterService"
 
-    public func incrementAttempt() {
+    open func incrementAttempt() {
         userDefaults.incrementNum(forKey: attemptsKey)
     }
     
-    public func getCurrentAttempts() -> Int {
+    open func getCurrentAttempts() -> Int {
         let val: Int = userDefaults.get(forKey: attemptsKey) ?? 0
         return val
     }
     
-    public func resetAttempts() {
+    open func resetAttempts() {
         userDefaults.remove(forKey: attemptsKey)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ACTimeSpentRule: ACRequestReviewRule {
+open class ACTimeSpentRule: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let customFlagKey: String
     private var customFlagSessionKey: String {
@@ -20,11 +20,11 @@ public class ACTimeSpentRule: ACRequestReviewRule {
         self.requiredTime = requiredTimeInMinutes * 60
     }
     
-    public func startSession() {
+    open func startSession() {
         userDefaults.set(Date().timeIntervalSince1970, forKey: customFlagSessionKey)
     }
     
-    public func endSession() {
+    open func endSession() {
         let currentTime = Date().timeIntervalSince1970
         var startSeconds: Double = userDefaults.get(forKey: customFlagSessionKey) ?? 0.0
         let sessionTime = currentTime - startSeconds
@@ -32,12 +32,12 @@ public class ACTimeSpentRule: ACRequestReviewRule {
         self.addToTotalTimeSpent(sessionTime)
     }
     
-    public func getTotalSecondsSpent() -> TimeInterval {
+    open func getTotalSecondsSpent() -> TimeInterval {
         let value: Double = userDefaults.get(forKey: customFlagKey) ?? 0.0
         return value
     }
     
-    public var isShouldDisplayRating: Bool {
+    open var isShouldDisplayRating: Bool {
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: customFlagKey) ?? 0
         if currentTimeSpent >= requiredTime {
             userDefaults.set(0, forKey: customFlagKey)

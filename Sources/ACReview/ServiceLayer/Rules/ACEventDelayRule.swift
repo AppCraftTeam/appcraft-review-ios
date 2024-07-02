@@ -7,13 +7,13 @@
 
 import Foundation
 
-public class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
+open class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
     private let userDefaults = ACUserDefaultsService.shared
 
-    public var conditionKey: String
-    public var totalTimeKey: String
-    public var sessionKey: String
-    public var minimumUsageTime: TimeInterval
+    open var conditionKey: String
+    open var totalTimeKey: String
+    open var sessionKey: String
+    open var minimumUsageTime: TimeInterval
     
     public init(key: String, minimumUsageTime: TimeInterval) {
         self.conditionKey = key
@@ -22,16 +22,16 @@ public class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
         self.minimumUsageTime = minimumUsageTime
     }
     
-    public var isActiveCondition: Bool {
+    open var isActiveCondition: Bool {
         let val: Bool? = userDefaults.get(forKey: conditionKey)
         return val ?? false
     }
     
-    public func setCondition(_ val: Bool) {
+    open func setCondition(_ val: Bool) {
         userDefaults.set(val, forKey: conditionKey)
     }
 
-    public var isShouldDisplayRating: Bool {
+    open var isShouldDisplayRating: Bool {
         guard isActiveCondition else {
             return false
         }
