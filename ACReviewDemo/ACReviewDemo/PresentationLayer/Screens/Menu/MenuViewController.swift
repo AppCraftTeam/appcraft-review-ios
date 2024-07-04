@@ -25,6 +25,13 @@ final class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        model.didOpenRuleScreen = { [weak self] rule in
+            let vc = RuleViewController()
+            vc.model = RuleViewModel(rule: rule)
+            
+            self?.present(vc, animated: true)
+        }
+        
         self.view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
