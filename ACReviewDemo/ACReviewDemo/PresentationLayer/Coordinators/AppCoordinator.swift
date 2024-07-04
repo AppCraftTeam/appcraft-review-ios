@@ -13,7 +13,7 @@ class AppCoordinator: DPWindowCoordinator {
     override func start() {
         super.start()
         
-        let vc = InitialViewController()
+        let vc = MenuViewController()
         self.show(vc)
     }
     

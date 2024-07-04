@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DPLibs/DPUIKit.git",
       "state" : {
-        "revision" : "8b1be95a2be4d57cf24df8eb244e43607f3853c5",
-        "version" : "3.0.0"
+        "revision" : "865c44d10f3d3b9c3764714b7afbe0612d463210",
+        "version" : "5.0.1"
       }
     },
     {
