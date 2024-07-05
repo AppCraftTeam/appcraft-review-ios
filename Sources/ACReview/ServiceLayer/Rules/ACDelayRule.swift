@@ -58,6 +58,7 @@ private extension ACDelayRule {
     func addToTotalTimeSpent(_ time: TimeInterval) {
         let totalTimeSpent = getTotalSecondsSpent()
         let newTotalTimeSpent = totalTimeSpent + time
+        print("totalTimeSpent - \(totalTimeSpent), time - \(time), minimumUsageTime - \(minimumUsageTime)")
         ACUserDefaultsService.shared.set(newTotalTimeSpent, forKey: totalTimeKey)
     }
     

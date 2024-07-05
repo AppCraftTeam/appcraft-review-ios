@@ -209,7 +209,7 @@ private extension RuleViewController {
         
         switch model.rule {
         case .eventDelayRule:
-            let rule = ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: 5)
+            let rule = ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: .minutes(5))
             rule.startSession()
         case .ruleCounter:
             let rule = ACRuleCounter(customFlagKey: AppKeys.ruleCounterKey, threshold: 5)

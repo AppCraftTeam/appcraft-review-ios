@@ -15,11 +15,11 @@ open class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
     open var sessionKey: String
     open var minimumUsageTime: TimeInterval
     
-    public init(key: String, minimumUsageTime: TimeInterval) {
+    public init(key: String, minimumUsageTime: ACTimeUnit) {
         self.conditionKey = key
         self.totalTimeKey = key + "_total_time"
         self.sessionKey = key + "_session"
-        self.minimumUsageTime = minimumUsageTime
+        self.minimumUsageTime = minimumUsageTime.secondsTimeInterval
     }
     
     open var isActiveCondition: Bool {

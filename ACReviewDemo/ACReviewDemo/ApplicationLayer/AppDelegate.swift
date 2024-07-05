@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func saveSessions() {
         // Проверка что сессия начата происходит уже внутри функции поэтому isActiveCondition можно не проверять
-        ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: 5).endSession()
-        ACAppUpdateWithDelayRule(minimumUsageTimeInMinutes: 5).endSession()
+        ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: .minutes(5)).endSession()
+        ACAppUpdateWithDelayRule(minimumUsageTime: .minutes(5)).endSession()
     }
 }
