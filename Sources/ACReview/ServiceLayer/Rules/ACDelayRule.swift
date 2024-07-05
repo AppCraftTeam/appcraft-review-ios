@@ -20,6 +20,7 @@ public protocol ACDelayRule {
     func setCondition(_ val: Bool)
     func startSession()
     func endSession()
+    func getTotalSecondsSpent() -> TimeInterval
 }
 
 public extension ACDelayRule {
@@ -41,6 +42,11 @@ public extension ACDelayRule {
         self.addToTotalTimeSpent(sessionTime)
     }
     
+    func getTotalSecondsSpent() -> TimeInterval {
+        let value: TimeInterval = ACUserDefaultsService.shared.get(forKey: totalTimeKey) ?? 0.0
+        return value
+    }
+    
     func resetTime() {
         ACUserDefaultsService.shared.set(0, forKey: totalTimeKey)
         ACUserDefaultsService.shared.remove(forKey: sessionKey)
@@ -50,8 +56,9 @@ public extension ACDelayRule {
 private extension ACDelayRule {
     
     func addToTotalTimeSpent(_ time: TimeInterval) {
-        let totalTimeSpent: TimeInterval = ACUserDefaultsService.shared.get(forKey: totalTimeKey) ?? 0.0
+        let totalTimeSpent = getTotalSecondsSpent()
         let newTotalTimeSpent = totalTimeSpent + time
         ACUserDefaultsService.shared.set(newTotalTimeSpent, forKey: totalTimeKey)
     }
+    
 }

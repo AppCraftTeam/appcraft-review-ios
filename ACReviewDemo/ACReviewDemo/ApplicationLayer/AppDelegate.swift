@@ -5,6 +5,7 @@
 //  Created by Дмитрий Поляков on 22.08.2022.
 //
 
+import ACReview
 import UIKit
 
 @main
@@ -18,4 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
+    func applicationWillTerminate(_ application: UIApplication) {
+        saveSessions()
+    }
+    
+    private func saveSessions() {
+        // Проверка что сессия начата происходит уже внутри функции поэтому isActiveCondition можно не проверять
+        ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: 5).endSession()
+        ACAppUpdateWithDelayRule(minimumUsageTimeInMinutes: 5).endSession()
+    }
 }

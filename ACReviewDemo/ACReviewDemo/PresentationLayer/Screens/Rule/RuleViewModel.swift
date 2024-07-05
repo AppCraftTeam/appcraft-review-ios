@@ -14,7 +14,7 @@ final class RuleViewModel {
     
     let appUpdateWithDelayRule = ACAppUpdateWithDelayRule(minimumUsageTimeInMinutes: 5)
     let eventDelayRule = ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: 5)
-    let timeSpentRule = ACTimeSpentRule(customFlagKey: AppKeys.ruleCounterKey, requiredTimeInMinutes: 5)
+    let timeSpentRule = ACEventDelayRule(key: AppKeys.ruleCounterKey, minimumUsageTime: 5)
 
     init(rule: ReviewMenuRule) {
         self.rule = rule

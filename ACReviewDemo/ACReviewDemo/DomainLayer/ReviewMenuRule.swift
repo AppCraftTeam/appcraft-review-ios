@@ -8,7 +8,7 @@
 import Foundation
 
 enum ReviewMenuRule: CaseIterable {
-    case appUpdateRule, appUpdateWithDelayRule, eventDelayRule, ruleCounter, seriallyRule, timeSpentRule
+    case appUpdateRule, appUpdateWithDelayRule, eventDelayRule, timeSpentRule, ruleCounter, seriallyRule
     
     var title: String {
         switch self {
@@ -16,14 +16,12 @@ enum ReviewMenuRule: CaseIterable {
             return "ACAppUpdateRule"
         case .appUpdateWithDelayRule:
             return "ACAppUpdateWithDelayRule"
-        case .eventDelayRule:
+        case .eventDelayRule, .timeSpentRule:
             return "ACEventDelayRule"
         case .ruleCounter:
             return "ACRuleCounter"
         case .seriallyRule:
             return "ACSeriallyRule"
-        case .timeSpentRule:
-            return "ACTimeSpentRule"
         }
     }
     
@@ -35,12 +33,12 @@ enum ReviewMenuRule: CaseIterable {
             return "Условие: после установки новой версии приложения нужно провести 5 минут в приложении (суммарно)"
         case .eventDelayRule:
             return  "Условие: после нажатия на кнопку на сл.экране нужно провести 5 минут в приложении (суммарно)"
+        case .timeSpentRule:
+            return "Условие: провести 5 минут на сл.экране (суммарно)"
         case .ruleCounter:
             return "Условие: нажать кнопку на сл.экране 5 раз"
         case .seriallyRule:
             return "Условие: вызывать запрос на оценку каждые 2 дня"
-        case .timeSpentRule:
-            return "Условие: провести 5 минут на сл.экране (суммарно)"
         }
     }
 }
