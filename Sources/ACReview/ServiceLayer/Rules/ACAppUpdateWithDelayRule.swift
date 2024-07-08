@@ -18,8 +18,8 @@ open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
     open var totalTimeKey: String = "ACReview_afterUpdateDelayRule_totalTime"
     open var minimumUsageTime: TimeInterval
     
-    public init(minimumUsageTimeInMinutes: TimeInterval) {
-        self.minimumUsageTime = minimumUsageTimeInMinutes * 60
+    public init(minimumUsageTime: ACTimeUnit) {
+        self.minimumUsageTime = minimumUsageTime.secondsTimeInterval
     }
     
     open var isActiveCondition: Bool {
