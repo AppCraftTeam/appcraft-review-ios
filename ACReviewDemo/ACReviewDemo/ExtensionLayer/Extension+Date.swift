@@ -13,6 +13,7 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = dateStyle
         dateFormatter.timeStyle = dateStyle
+        
         return dateFormatter.string(from: self)
     }
 }

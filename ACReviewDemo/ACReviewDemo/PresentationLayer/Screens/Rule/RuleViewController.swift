@@ -8,7 +8,7 @@
 import ACReview
 import UIKit
 
-final class RuleViewController: UIViewController {
+final class RuleViewController: AppViewController {
     
     var model: RuleViewModel?
     
@@ -73,8 +73,6 @@ final class RuleViewController: UIViewController {
         case .appUpdateWithDelayRule:
             let reviewService = ACReviewService(rule: ReviewRules.appUpdateWithDelayRule)
             reviewService.tryToShowRating()
-        case .eventDelayRule:
-            break
         case .timeSpentRule:
             ReviewRules.timeSpentRule.endSession()
             let reviewService = ACReviewService(rule: ReviewRules.timeSpentRule)

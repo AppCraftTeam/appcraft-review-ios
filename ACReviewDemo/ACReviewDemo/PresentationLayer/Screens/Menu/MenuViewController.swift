@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MenuViewController: UIViewController {
+final class MenuViewController: AppViewController {
     
     var model: MenuViewModel = MenuViewModel()
     
