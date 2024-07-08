@@ -71,13 +71,13 @@ final class RuleViewController: UIViewController {
         }
         switch model.ruleType {
         case .appUpdateWithDelayRule:
-            let reviewService = ACReviewService(rule: model.eventDelayRule)
+            let reviewService = ACReviewService(rule: ReviewRules.appUpdateWithDelayRule)
             reviewService.tryToShowRating()
         case .eventDelayRule:
             break
         case .timeSpentRule:
-            model.timeSpentRule.endSession()
-            let reviewService = ACReviewService(rule: model.timeSpentRule)
+            ReviewRules.timeSpentRule.endSession()
+            let reviewService = ACReviewService(rule: ReviewRules.timeSpentRule)
             reviewService.tryToShowRating()
         default:
             break
@@ -137,8 +137,7 @@ private extension RuleViewController {
         
         switch model.ruleType {
         case .appUpdateRule:
-            let rule = ACAppUpdateRule()
-            let reviewService = ACReviewService(rule: rule)
+            let reviewService = ACReviewService(rule: ReviewRules.appUpdateRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
                     self.statusLabel.text = "Вызов запроса на оценку не требуется"
@@ -148,21 +147,20 @@ private extension RuleViewController {
                 }
             )
         case .appUpdateWithDelayRule:
-            model.appUpdateWithDelayRule.startSession()
-            let reviewService = ACReviewService(rule:  model.appUpdateWithDelayRule)
+            let reviewService = ACReviewService(rule:  ReviewRules.appUpdateWithDelayRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
-                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется,  \(model.timeSpentRule.getTotalSecondsSpent().asString(style: .abbreviated))"
+                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется, \(ReviewRules.appUpdateWithDelayRule.getTotalSecondsSpent().asString(style: .abbreviated))"
                 },
                 requiredFinished: { isDisplayd in
                     self.statusLabel.text = "Вызов запроса на оценку был удовлетворен. Окно было показано - \(isDisplayd)"
                 }
             )
         case .eventDelayRule:
-            let reviewService = ACReviewService(rule: model.eventDelayRule)
+            let reviewService = ACReviewService(rule: ReviewRules.eventDelayRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
-                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется,  \(model.timeSpentRule.getTotalSecondsSpent().asString(style: .abbreviated))"
+                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется, \(ReviewRules.eventDelayRule.getTotalSecondsSpent().asString(style: .abbreviated))"
                 },
                 requiredFinished: { isDisplayd in
                     self.statusLabel.text = "Вызов запроса на оценку был удовлетворен. Окно было показано - \(isDisplayd)"
@@ -171,8 +169,7 @@ private extension RuleViewController {
         case .ruleCounter:
             break
         case .seriallyRule:
-            let rule = ACSeriallyRule(actionFrequency: .daily(everyXDays: 2))
-            let reviewService = ACReviewService(rule: rule)
+            let reviewService = ACReviewService(rule: ReviewRules.seriallyRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
                     self.statusLabel.text = "Вызов запроса на оценку не требуется"
@@ -182,12 +179,12 @@ private extension RuleViewController {
                 }
             )
         case .timeSpentRule:
-            model.timeSpentRule.setCondition(true)
-            model.timeSpentRule.startSession()
-            let reviewService = ACReviewService(rule:  model.timeSpentRule)
+            ReviewRules.timeSpentRule.setCondition(true)
+            ReviewRules.timeSpentRule.startSession()
+            let reviewService = ACReviewService(rule:  ReviewRules.timeSpentRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
-                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется,  \(model.timeSpentRule.getTotalSecondsSpent().asString(style: .abbreviated))"
+                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется,  \(ReviewRules.timeSpentRule.getTotalSecondsSpent().asString(style: .abbreviated))"
                 },
                 requiredFinished: { isDisplayd in
                     self.statusLabel.text = "Вызов запроса на оценку был удовлетворен. Окно было показано - \(isDisplayd)"
@@ -204,10 +201,11 @@ private extension RuleViewController {
         
         switch model.ruleType {
         case .eventDelayRule:
-            let rule = ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: .minutes(5))
+            let rule = ReviewRules.eventDelayRule
+            rule.setCondition(true)
             rule.startSession()
         case .ruleCounter:
-            let rule = ACRuleCounter(customFlagKey: AppKeys.ruleCounterKey, threshold: 5)
+            let rule = ReviewRules.counterRule
             let reviewService = ACReviewService(rule: rule)
             
             rule.incrementFlag()

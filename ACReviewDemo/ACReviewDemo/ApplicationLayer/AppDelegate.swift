@@ -12,7 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        true
+        startSessions()
+        return true
     }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -23,9 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         saveSessions()
     }
     
+    // Проверка что сессия начата происходит уже внутри функции поэтому isActiveCondition можно не проверять
+
+    private func startSessions() {
+        ReviewRules.eventDelayRule.startSession()
+        ReviewRules.appUpdateWithDelayRule.startSession()
+    }
+    
     private func saveSessions() {
-        // Проверка что сессия начата происходит уже внутри функции поэтому isActiveCondition можно не проверять
-        ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: .minutes(5)).endSession()
-        ACAppUpdateWithDelayRule(minimumUsageTime: .minutes(5)).endSession()
+        ReviewRules.eventDelayRule.endSession()
+        ReviewRules.appUpdateWithDelayRule.endSession()
     }
 }
