@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9573D8142C3B8DB800B54003 /* Extension+Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9573D8132C3B8DB800B54003 /* Extension+Double.swift */; };
 		959B70E72C36B1B300EA701A /* RuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959B70E62C36B1B300EA701A /* RuleViewModel.swift */; };
 		959B70E92C36B1BD00EA701A /* RuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959B70E82C36B1BD00EA701A /* RuleViewController.swift */; };
 		959B70ED2C36B45700EA701A /* ReviewMenuRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959B70EC2C36B45700EA701A /* ReviewMenuRule.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9573D8132C3B8DB800B54003 /* Extension+Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Double.swift"; sourceTree = "<group>"; };
 		959B70E62C36B1B300EA701A /* RuleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleViewModel.swift; sourceTree = "<group>"; };
 		959B70E82C36B1BD00EA701A /* RuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleViewController.swift; sourceTree = "<group>"; };
 		959B70EC2C36B45700EA701A /* ReviewMenuRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewMenuRule.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				E282F7A828B3AF6000E39963 /* AppViewController.swift */,
 				E282F7AA28B3AF8100E39963 /* AppViewModel.swift */,
 				959B70EE2C36C8F700EA701A /* Extension+Date.swift */,
+				9573D8132C3B8DB800B54003 /* Extension+Double.swift */,
 			);
 			path = ExtensionLayer;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				E282F78028B3A6D700E39963 /* AppCoordinator.swift in Sources */,
 				959B70E92C36B1BD00EA701A /* RuleViewController.swift in Sources */,
 				959B70E72C36B1B300EA701A /* RuleViewModel.swift in Sources */,
+				9573D8142C3B8DB800B54003 /* Extension+Double.swift in Sources */,
 				E282F7AB28B3AF8100E39963 /* AppViewModel.swift in Sources */,
 				959B70EF2C36C8F700EA701A /* Extension+Date.swift in Sources */,
 				95A5DDBA2C3573970075E14B /* MenuViewModel.swift in Sources */,

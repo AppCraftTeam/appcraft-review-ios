@@ -25,11 +25,16 @@ final class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        model.didOpenRuleScreen = { [weak self] rule in
+        self.title = "ACReviewDemo"
+        self.view.backgroundColor = .systemGroupedBackground
+        self.navigationController?.navigationBar.barStyle = .default
+        self.navigationController?.navigationBar.backgroundColor = .systemGroupedBackground
+        
+        model.didOpenRuleScreen = { [weak self] ruleType in
             let vc = RuleViewController()
-            vc.model = RuleViewModel(rule: rule)
+            vc.model = RuleViewModel(ruleType: ruleType)
             
-            self?.present(vc, animated: true)
+            self?.navigationController?.pushViewController(vc, animated: true)
         }
         
         self.view.addSubview(tableView)

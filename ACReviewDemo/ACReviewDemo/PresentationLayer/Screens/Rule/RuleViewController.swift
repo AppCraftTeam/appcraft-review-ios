@@ -20,19 +20,11 @@ final class RuleViewController: UIViewController {
     }()
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [ruleNameLabel, conditionLabel, statusLabel])
+        let stackView = UIStackView(arrangedSubviews: [conditionLabel, statusLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 8
         return stackView
-    }()
-    
-    private lazy var ruleNameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 24)
-        label.numberOfLines = 0
-        return label
     }()
     
     private lazy var conditionLabel: UILabel = {
@@ -77,7 +69,7 @@ final class RuleViewController: UIViewController {
         guard let model = self.model else {
             return
         }
-        switch model.rule {
+        switch model.ruleType {
         case .appUpdateWithDelayRule:
             let reviewService = ACReviewService(rule: model.eventDelayRule)
             reviewService.tryToShowRating()
@@ -97,7 +89,11 @@ final class RuleViewController: UIViewController {
 private extension RuleViewController {
     
     func setupView() {
-        view.backgroundColor = .white
+        guard let model = self.model else {
+            return
+        }
+        self.title = model.ruleType.title
+        self.view.backgroundColor = .systemGroupedBackground
         
         containerView.backgroundColor = .black.withAlphaComponent(0.1)
         containerView.layer.cornerRadius = 15.0
@@ -130,17 +126,16 @@ private extension RuleViewController {
         guard let model = self.model else {
             return
         }
-        self.ruleNameLabel.text = model.rule.title
-        self.conditionLabel.text = model.rule.subtitle
+        self.conditionLabel.text = model.ruleType.subtitle
         self.statusLabel.text = "Вызов запроса на оценку не требуется"
-        switch model.rule {
+        switch model.ruleType {
         case .ruleCounter, .eventDelayRule:
             self.actionButton.isHidden = false
         default:
             self.actionButton.isHidden = true
         }
         
-        switch model.rule {
+        switch model.ruleType {
         case .appUpdateRule:
             let rule = ACAppUpdateRule()
             let reviewService = ACReviewService(rule: rule)
@@ -157,7 +152,7 @@ private extension RuleViewController {
             let reviewService = ACReviewService(rule:  model.appUpdateWithDelayRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
-                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется \(model.timeSpentRule.getTotalSecondsSpent())"
+                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется,  \(model.timeSpentRule.getTotalSecondsSpent().asString(style: .abbreviated))"
                 },
                 requiredFinished: { isDisplayd in
                     self.statusLabel.text = "Вызов запроса на оценку был удовлетворен. Окно было показано - \(isDisplayd)"
@@ -167,7 +162,7 @@ private extension RuleViewController {
             let reviewService = ACReviewService(rule: model.eventDelayRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
-                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется \(model.timeSpentRule.getTotalSecondsSpent())"
+                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется,  \(model.timeSpentRule.getTotalSecondsSpent().asString(style: .abbreviated))"
                 },
                 requiredFinished: { isDisplayd in
                     self.statusLabel.text = "Вызов запроса на оценку был удовлетворен. Окно было показано - \(isDisplayd)"
@@ -192,7 +187,7 @@ private extension RuleViewController {
             let reviewService = ACReviewService(rule:  model.timeSpentRule)
             reviewService.tryToShowRating(
                 notRequiredFinished: {
-                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется \(model.timeSpentRule.getTotalSecondsSpent())"
+                    self.statusLabel.text = "Проверка будет осуществлена при выходе из экрана или при следующем его открытии. Вызов запроса на оценку не требуется,  \(model.timeSpentRule.getTotalSecondsSpent().asString(style: .abbreviated))"
                 },
                 requiredFinished: { isDisplayd in
                     self.statusLabel.text = "Вызов запроса на оценку был удовлетворен. Окно было показано - \(isDisplayd)"
@@ -207,7 +202,7 @@ private extension RuleViewController {
             return
         }
         
-        switch model.rule {
+        switch model.ruleType {
         case .eventDelayRule:
             let rule = ACEventDelayRule(key: AppKeys.eventDelayRuleKey, minimumUsageTime: .minutes(5))
             rule.startSession()

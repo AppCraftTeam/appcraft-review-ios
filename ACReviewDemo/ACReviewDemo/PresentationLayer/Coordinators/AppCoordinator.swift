@@ -7,6 +7,7 @@
 
 import Foundation
 import DPUIKit
+import UIKit
 
 class AppCoordinator: DPWindowCoordinator {
     
@@ -14,7 +15,7 @@ class AppCoordinator: DPWindowCoordinator {
         super.start()
         
         let vc = MenuViewController()
-        self.show(vc)
+        self.show(UINavigationController(rootViewController: vc))
     }
     
 }
