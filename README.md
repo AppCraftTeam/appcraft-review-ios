@@ -11,11 +11,11 @@
 - Swift 5.0 and later
 
 ## Overview
-* [How to use](#how-to-use)\
-	* [Basic usage](#basic-usage)\
-	* [Rules](#rules)\
-	* [Review alert call counter](#review-alert-call-counter)\
-* [Demo](#demo)\
+* [How to use](#how-to-use)
+	* [Basic usage](#basic-usage)
+	* [Rules](#rules)
+	* [Review alert call counter](#review-alert-call-counter)
+* [Demo](#demo)
 * [Install](#install)
 
 ## How to use
