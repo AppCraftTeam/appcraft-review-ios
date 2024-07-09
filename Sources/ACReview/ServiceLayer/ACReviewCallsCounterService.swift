@@ -13,6 +13,7 @@ public protocol ACReviewCallsCounter {
     func resetAttempts()
 }
 
+/// A set of methods for counting the number of calls to the request review call
 open class ACReviewCallsCounterService: ACReviewCallsCounter {
     private let userDefaults = ACUserDefaultsService.shared
     private let attemptsKey = "ACReview_reviewCallsCounterService"

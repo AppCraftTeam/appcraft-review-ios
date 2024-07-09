@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A wrapper to work with UserDefaults
 open class ACUserDefaultsService {
     
     public static let shared = ACUserDefaultsService()

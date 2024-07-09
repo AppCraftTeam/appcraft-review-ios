@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Show the evaluation request periodically, after a specified interval of time
 open class ACSeriallyRule: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let actionFrequency: ACActionFrequency
@@ -77,14 +78,14 @@ private extension ACSeriallyRule {
                 userDefaults.set(currentDate, forKey: lastPromptDateKey)
                 return true
             }
-        case .quarterly:
-            if let nextPromptDate = calendar.date(byAdding: .month, value: 3, to: lastPromptDate),
+        case .twoWeekly:
+            if let nextPromptDate = calendar.date(byAdding: .day, value: 14, to: lastPromptDate),
                currentDate >= nextPromptDate {
                 userDefaults.set(currentDate, forKey: lastPromptDateKey)
                 return true
             }
-        case .twoWeekly:
-            if let nextPromptDate = calendar.date(byAdding: .day, value: 14, to: lastPromptDate),
+        case .quarterly:
+            if let nextPromptDate = calendar.date(byAdding: .month, value: 3, to: lastPromptDate),
                currentDate >= nextPromptDate {
                 userDefaults.set(currentDate, forKey: lastPromptDateKey)
                 return true

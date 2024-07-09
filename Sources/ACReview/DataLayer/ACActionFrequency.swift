@@ -7,22 +7,31 @@
 
 import Foundation
 
+/// Type for the frequency of the request review call
 public enum ACActionFrequency {
-    /// Ежегодно
+    
+    /// Annually
     case onceYear
-    /// Каждые <x> месяцев
+    
+    /// Every <x> months
     case onceEveryMonths(month: Int)
-    /// Ежемесечно в указанный день недели
+    
+    /// Every month on the specified day of the month
     case monthly(dayOfMonth: Int)
-    /// Ежедневно с промежутком в <x> дней
+    
+    /// Daily with an interval of <x> days
     case daily(everyXDays: Int)
-    /// Еженедельно
+    
+    /// Weekly
     case weekly
-    /// Ежеквартально
-    case quarterly
-    ////// Раз в две недели
+    
+    /// Every two weeks
     case twoWeekly
     
+    /// Quarterly
+    case quarterly
+    
+    /// Unique key for UserDefaults
     var key: String {
         switch self {
         case .onceYear:
@@ -35,10 +44,10 @@ public enum ACActionFrequency {
             return "ACReview_daily_\(everyXDays)"
         case .weekly:
             return "ACReview_weekly"
-        case .quarterly:
-            return "ACReview_quarterly"
         case .twoWeekly:
             return "ACReview_twoWeekly"
+        case .quarterly:
+            return "ACReview_quarterly"
         }
     }
 }

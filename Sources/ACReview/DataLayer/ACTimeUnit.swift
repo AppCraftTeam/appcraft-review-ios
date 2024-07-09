@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Enum wrapper for creating milliseconds
 public enum ACTimeUnit {
     case seconds(Int)
     case minutes(Int)
