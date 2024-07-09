@@ -9,7 +9,7 @@ import Foundation
 
 public protocol ACReviewCallsCounter {
     func incrementAttempt()
-    func getCurrentAttempts()  -> Int
+    func getCurrentAttempts() -> Int
     func resetAttempts()
 }
 
