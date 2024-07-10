@@ -3,7 +3,7 @@
 [![Swift](https://img.shields.io/badge/Swift-5-orange?style=flat-square)](https://img.shields.io/badge/Swift-5-Orange?style=flat-square)
 [![Platforms](https://img.shields.io/badge/Platforms-iOS-yellowgreen?style=flat-square)](https://img.shields.io/badge/Platforms-iOS?style=flat-square)
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
-[![version](https://img.shields.io/badge/version-0.0.1-white.svg)](https://semver.org)
+[![version](https://img.shields.io/badge/version-1.0.0-white.svg)](https://semver.org)
 
 ## Requirements
 - Xcode 13 and later
