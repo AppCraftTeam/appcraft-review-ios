@@ -7,10 +7,7 @@
 
 import Foundation
 
-/* Показать запрос оценки через определенное время использования приложения после совершения какого-либо действия,
- пример - после того как перешли на определенный экран или выполнили определенное действие сохранить isActiveCondition,
- после чего по условию нужно еще 5 минут пользоваться приложением (minimumUsageTime) (время сохраняется между закрытием приложения)
- */
+/// Show an evaluation request after a specified period of time of using the app after an action has been performed
 public protocol ACDelayRule {
     var isActiveCondition: Bool { get }
     var totalTimeKey: String { get set }
@@ -41,15 +38,18 @@ public extension ACDelayRule {
         addToTotalTimeSpent(sessionTime)
     }
     
+    /// Get the duration of the previous saved and completed session
     func getSavedSecondsSpent() -> TimeInterval {
         let value: TimeInterval = ACUserDefaultsService.shared.get(forKey: totalTimeKey) ?? 0.0
         return value
     }
     
+    /// Get the total duration of the session, including the session not yet completed
     func getTotalSecondsSpent() -> TimeInterval {
         getSavedSecondsSpent() + getSessionSpent()
     }
     
+    /// Get the duration of the current session
     func getSessionSpent() -> TimeInterval {
         guard isActiveCondition else {
             return 0.0
@@ -69,9 +69,9 @@ public extension ACDelayRule {
 
 private extension ACDelayRule {
     
+    /// Save current session time
     func addToTotalTimeSpent(_ time: TimeInterval) {
         let totalTimeSpent = getTotalSecondsSpent()
         ACUserDefaultsService.shared.set(totalTimeSpent, forKey: totalTimeKey)
     }
-    
 }

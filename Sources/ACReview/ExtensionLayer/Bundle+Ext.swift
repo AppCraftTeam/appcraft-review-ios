@@ -9,6 +9,7 @@ import Foundation
 
 public extension Bundle {
     
+    /// Get current app version
     var currentVersion: String? {
         self.infoDictionary?["CFBundleShortVersionString"] as? String
     }

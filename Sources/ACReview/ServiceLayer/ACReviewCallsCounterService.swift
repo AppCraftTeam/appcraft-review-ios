@@ -9,10 +9,11 @@ import Foundation
 
 public protocol ACReviewCallsCounter {
     func incrementAttempt()
-    func getCurrentAttempts()  -> Int
+    func getCurrentAttempts() -> Int
     func resetAttempts()
 }
 
+/// A set of methods for counting the number of calls to the request review call
 open class ACReviewCallsCounterService: ACReviewCallsCounter {
     private let userDefaults = ACUserDefaultsService.shared
     private let attemptsKey = "ACReview_reviewCallsCounterService"

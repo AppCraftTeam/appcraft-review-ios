@@ -10,6 +10,7 @@ import StoreKit
 
 typealias ACCallServiceCallback = ((_ isPresented: Bool) -> Void)
 
+/// A set of methods to verify the calling of the request alert after an attempt to open it
 class ACReviewCallVerificationService {
     
     static let shared = ACReviewCallVerificationService()
@@ -21,6 +22,11 @@ class ACReviewCallVerificationService {
     
     private init() {}
     
+    /*
+     During the time interval after the request is called, the new window appear is monitored,
+     which is most likely to be the review alert -> so the request is successful.
+     If the event was not detected, the timer is cancelled and it is considered that the system did not allow the alert to be displayed.
+     */
     func startObserving(callback: @escaping ACCallServiceCallback) {
         self.callback = callback
         windowVisibleObserver = NotificationCenter.default.addObserver(

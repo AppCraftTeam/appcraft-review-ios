@@ -12,9 +12,12 @@ public protocol ACRequestReviewRule {
     func shouldDisplayRating(_ completion: @escaping (Bool) -> Void)
 }
 
+/// A set of methods for working with review rules
 open class ACReviewService {
     private var rules: [ACRequestReviewRule]
     private var maxRequestCalls: Int?
+    
+    /// Key for UserDefault to saving the date of last opening review alert
     private var reviewLastDateKey = "ACReview_review_last_call_date"
     
     open private(set) var reviewLastCallDate: Date? {
@@ -47,6 +50,7 @@ open class ACReviewService {
         self.rules = rules
     }
     
+    // Check the conditions of all rules and call the review alert if at least one rule allows it
     open func tryToShowRating(
         notRequiredFinished: (() -> Void)? = nil,
         requiredFinished: ((_ isPresented: Bool) -> Void)? = nil
@@ -61,6 +65,7 @@ open class ACReviewService {
             dispatchGroup.enter()
             rule.shouldDisplayRating { result in
                 if result {
+                    /// If one rule allows an alert to be call, the other rules are not checked
                     shouldDisplay = true
                 }
                 dispatchGroup.leave()
@@ -73,6 +78,7 @@ open class ACReviewService {
                 return
             }
             
+            /// Checking the limit on the maximum number of calls the review alert
             if let maxRequestCalls = self.maxRequestCalls {
                 if self.callsCounterService.getCurrentAttempts() < maxRequestCalls {
                     self.callReviewController(requiredFinished)
@@ -88,6 +94,7 @@ open class ACReviewService {
 
 private extension ACReviewService {
     
+    /// Method for calling the review alert
     func callReviewController(_ requiredFinished: ((Bool) -> Void)?) {
         if #available(iOS 14.0, *) {
             if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -100,6 +107,7 @@ private extension ACReviewService {
         }
     }
     
+    /// Attempt to verify the call attempt and save information about it
     func processingAttemptCallRequest(_ requiredFinished: ((Bool) -> Void)?) {
         callsCounterService.incrementAttempt()
         reviewLastCallDate = Date()

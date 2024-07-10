@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Show an evaluation request after a specified period of time of using the app after an action has been performed by user
 open class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
     private let userDefaults = ACUserDefaultsService.shared
 
@@ -36,6 +37,7 @@ open class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
             completion(false)
             return
         }
+        /// Check whether the stored usage time corresponds to the required time value
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
             resetTime()

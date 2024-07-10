@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Show an evaluation request after a certain amount of time using the app after the app has been upgraded to a new version
 open class ACAppUpdateRule: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let currentVersionKey = "ACReview_afterUpdateRuleCurrentVersion"
@@ -19,6 +20,7 @@ open class ACAppUpdateRule: ACRequestReviewRule {
             return
         }
         
+        /// Check app version
         if let savedVersion: String = userDefaults.get(forKey: currentVersionKey) {
             if currentVersion != savedVersion {
                 userDefaults.set(currentVersion, forKey: currentVersionKey)

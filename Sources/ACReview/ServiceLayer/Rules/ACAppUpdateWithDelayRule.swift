@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Показать запрос оценки через определенное время использования новой версии приложения
+/// Show an evaluation request after a specified time of using a new version of the application
 open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
     private let userDefaults = ACUserDefaultsService.shared
     private var currentVersionKey = "ACReview_afterUpdateDelayRuleCurrentVersion"
@@ -23,6 +23,7 @@ open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
     }
     
     open var isActiveCondition: Bool {
+        /// Check app version
         guard let currentVersion = Bundle.main.currentVersion else {
             return false
         }

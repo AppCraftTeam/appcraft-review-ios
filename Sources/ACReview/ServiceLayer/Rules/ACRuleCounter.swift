@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Show an evaluation request after the user performs a specific action a number of times
 open class ACRuleCounter: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let customFlagKey: String
