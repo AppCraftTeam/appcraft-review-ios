@@ -37,6 +37,7 @@ open class ACEventDelayRule: ACRequestReviewRule, ACDelayRule {
             completion(false)
             return
         }
+        /// Check whether the stored usage time corresponds to the required time value
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
             resetTime()

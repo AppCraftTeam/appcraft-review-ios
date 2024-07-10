@@ -38,6 +38,7 @@ open class ACSeriallyRule: ACRequestReviewRule {
 
 private extension ACSeriallyRule {
     
+    /// Check if the current date and the saved original date match for the review alert display frequency
     func isShouldCallRating(with actionFrequency: ACActionFrequency, lastPromptDate: Date, lastPromptDateKey: String) -> Bool {
         let calendar = Calendar.current
         let currentDate = Date()

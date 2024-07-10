@@ -50,6 +50,7 @@ open class ACReviewService {
         self.rules = rules
     }
     
+    // Check the conditions of all rules and call the review alert if at least one rule allows it
     open func tryToShowRating(
         notRequiredFinished: (() -> Void)? = nil,
         requiredFinished: ((_ isPresented: Bool) -> Void)? = nil

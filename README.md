@@ -14,7 +14,7 @@
 * [How to use](#how-to-use)
 	* [Basic usage](#basic-usage)
 	* [Rules](#rules)
-	* [Review alert call counter](#review-alert-call-counter)
+	* [Calls counter](#calls-counter)
 * [Demo](#demo)
 * [Install](#install)
 
@@ -113,7 +113,7 @@ ACSeriallyRule(actionFrequency: .onceEveryMonths(month: 2))
 
 To create a custom rule that will take into consideration the time of using an application (or a specific screen) it is also necessary to add the `ACDelayRule` protocol.
 
-### Review alert call counter
+### Calls counter
 A set of methods for counting the number of calls to the request review call.
 
 ```swift

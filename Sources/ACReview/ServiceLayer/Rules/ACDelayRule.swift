@@ -69,6 +69,7 @@ public extension ACDelayRule {
 
 private extension ACDelayRule {
     
+    /// Save current session time
     func addToTotalTimeSpent(_ time: TimeInterval) {
         let totalTimeSpent = getTotalSecondsSpent()
         ACUserDefaultsService.shared.set(totalTimeSpent, forKey: totalTimeKey)
