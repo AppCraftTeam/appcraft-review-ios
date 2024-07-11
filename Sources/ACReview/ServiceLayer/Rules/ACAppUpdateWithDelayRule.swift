@@ -8,7 +8,7 @@
 import Foundation
 
 /// Show an evaluation request after a specified time of using a new version of the application
-open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
+open class ACAppUpdateWithDelayRule: ACAppUpdateRule, ACDelayRule {
     private let userDefaults = ACUserDefaultsService.shared
     private var currentVersionKey = "ACReview_afterUpdateDelayRuleCurrentVersion"
     
@@ -24,7 +24,7 @@ open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
     
     open var isActiveCondition: Bool {
         /// Check app version
-        guard let currentVersion = Bundle.main.currentVersion else {
+        guard let currentVersion = currentVersion else {
             return false
         }
         
@@ -35,11 +35,11 @@ open class ACAppUpdateWithDelayRule: ACRequestReviewRule, ACDelayRule {
         return false
     }
     
-    open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
+    open override func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
         let currentTimeSpent: TimeInterval = userDefaults.get(forKey: totalTimeKey) ?? 0
         if currentTimeSpent >= minimumUsageTime {
             resetTime()
-            if let currentVersion = Bundle.main.currentVersion {
+            if let currentVersion = currentVersion {
                 userDefaults.set(currentVersion, forKey: currentVersionKey)
             }
             

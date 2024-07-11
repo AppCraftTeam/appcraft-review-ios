@@ -16,13 +16,11 @@
 		959B70F12C36CFA100EA701A /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959B70F02C36CFA100EA701A /* AppKeys.swift */; };
 		95A5DDB82C3573880075E14B /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A5DDB72C3573880075E14B /* MenuViewController.swift */; };
 		95A5DDBA2C3573970075E14B /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A5DDB92C3573970075E14B /* MenuViewModel.swift */; };
-		95A5DDBD2C3575770075E14B /* DPUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 95A5DDBC2C3575770075E14B /* DPUIKit */; };
 		95C29CF52C341EF5002C1C7C /* ACReview in Frameworks */ = {isa = PBXBuildFile; productRef = 95C29CF42C341EF5002C1C7C /* ACReview */; };
 		E282F75E28B3A00B00E39963 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E282F75D28B3A00B00E39963 /* AppDelegate.swift */; };
 		E282F76028B3A00B00E39963 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E282F75F28B3A00B00E39963 /* SceneDelegate.swift */; };
 		E282F76728B3A00C00E39963 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E282F76628B3A00C00E39963 /* Assets.xcassets */; };
 		E282F76A28B3A00C00E39963 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E282F76828B3A00C00E39963 /* LaunchScreen.storyboard */; };
-		E282F78028B3A6D700E39963 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E282F77F28B3A6D700E39963 /* AppCoordinator.swift */; };
 		E282F78C28B3A9F700E39963 /* Localized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E282F78E28B3A9F700E39963 /* Localized.strings */; };
 		E282F79228B3AA1900E39963 /* Localized.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E282F79428B3AA1900E39963 /* Localized.stringsdict */; };
 		E282F7A928B3AF6000E39963 /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E282F7A828B3AF6000E39963 /* AppViewController.swift */; };
@@ -45,7 +43,6 @@
 		E282F76628B3A00C00E39963 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E282F76928B3A00C00E39963 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E282F76B28B3A00C00E39963 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E282F77F28B3A6D700E39963 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		E282F78B28B3A9EC00E39963 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E282F78D28B3A9F700E39963 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localized.strings; sourceTree = "<group>"; };
 		E282F78F28B3A9F800E39963 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localized.strings; sourceTree = "<group>"; };
@@ -61,7 +58,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				95C29CF52C341EF5002C1C7C /* ACReview in Frameworks */,
-				95A5DDBD2C3575770075E14B /* DPUIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				E282F77A28B3A5D900E39963 /* Components */,
-				E282F77528B3A32400E39963 /* Coordinators */,
 				E282F77B28B3A5DE00E39963 /* Screens */,
 			);
 			path = PresentationLayer;
@@ -151,14 +146,6 @@
 				E282F76628B3A00C00E39963 /* Assets.xcassets */,
 			);
 			path = Assets;
-			sourceTree = "<group>";
-		};
-		E282F77528B3A32400E39963 /* Coordinators */ = {
-			isa = PBXGroup;
-			children = (
-				E282F77F28B3A6D700E39963 /* AppCoordinator.swift */,
-			);
-			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		E282F77628B3A55D00E39963 /* DomainLayer */ = {
@@ -224,7 +211,6 @@
 			name = ACReviewDemo;
 			packageProductDependencies = (
 				95C29CF42C341EF5002C1C7C /* ACReview */,
-				95A5DDBC2C3575770075E14B /* DPUIKit */,
 			);
 			productName = ACReviewDemo;
 			productReference = E282F75A28B3A00B00E39963 /* ACReviewDemo.app */;
@@ -257,7 +243,6 @@
 			mainGroup = E282F75128B3A00B00E39963;
 			packageReferences = (
 				95C29CF32C341EF5002C1C7C /* XCLocalSwiftPackageReference ".." */,
-				95A5DDBB2C3575770075E14B /* XCRemoteSwiftPackageReference "DPUIKit" */,
 			);
 			productRefGroup = E282F75B28B3A00B00E39963 /* Products */;
 			projectDirPath = "";
@@ -288,7 +273,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				95A5DDB82C3573880075E14B /* MenuViewController.swift in Sources */,
-				E282F78028B3A6D700E39963 /* AppCoordinator.swift in Sources */,
 				959B70E92C36B1BD00EA701A /* RuleViewController.swift in Sources */,
 				959B70E72C36B1B300EA701A /* RuleViewModel.swift in Sources */,
 				9573D8162C3BCF1100B54003 /* ReviewRules.swift in Sources */,
@@ -897,23 +881,7 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		95A5DDBB2C3575770075E14B /* XCRemoteSwiftPackageReference "DPUIKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DPLibs/DPUIKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		95A5DDBC2C3575770075E14B /* DPUIKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 95A5DDBB2C3575770075E14B /* XCRemoteSwiftPackageReference "DPUIKit" */;
-			productName = DPUIKit;
-		};
 		95C29CF42C341EF5002C1C7C /* ACReview */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ACReview;
