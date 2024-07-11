@@ -12,10 +12,15 @@ open class ACAppUpdateRule: ACRequestReviewRule {
     private let userDefaults = ACUserDefaultsService.shared
     private let currentVersionKey = "ACReview_afterUpdateRuleCurrentVersion"
     
+    /// Get current app version
+    var currentVersion: String? {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+    
     public init() {}
     
     open func shouldDisplayRating(_ completion: @escaping (Bool) -> Void) {
-        guard let currentVersion = Bundle.main.currentVersion else {
+        guard let currentVersion = currentVersion else {
             completion(false)
             return
         }

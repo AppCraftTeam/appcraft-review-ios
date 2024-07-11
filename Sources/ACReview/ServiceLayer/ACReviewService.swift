@@ -8,26 +8,22 @@
 import Foundation
 import StoreKit
 
-public protocol ACRequestReviewRule {
-    func shouldDisplayRating(_ completion: @escaping (Bool) -> Void)
-}
-
 /// A set of methods for working with review rules
 open class ACReviewService {
     private var rules: [ACRequestReviewRule]
+    
+    /// Limit the number of openings of the review alert`, beyond which it will not be displayed
     private var maxRequestCalls: Int?
     
-    /// Key for UserDefault to saving the date of last opening review alert
-    private var reviewLastDateKey = "ACReview_review_last_call_date"
     
+    /// Key for UserDefault to saving the date of last opening review alert
+    private let reviewLastDateKey = "ACReview_review_last_call_date"
+    
+    private let userDefaults = ACUserDefaultsService.shared
+
     open private(set) var reviewLastCallDate: Date? {
-        get {
-            let savedValue: Date? = ACUserDefaultsService.shared.get(forKey: reviewLastDateKey)
-            return savedValue
-        }
-        set {
-            ACUserDefaultsService.shared.set(newValue, forKey: reviewLastDateKey)
-        }
+        get { userDefaults.get(forKey: reviewLastDateKey) }
+        set { userDefaults.set(newValue, forKey: reviewLastDateKey) }
     }
     
     open var callsCounterService: ACReviewCallsCounter
@@ -38,16 +34,12 @@ open class ACReviewService {
         self.callsCounterService = callsCounterService
     }
     
-    public convenience init(rule: ACRequestReviewRule, maxRequestCalls: Int? = nil, callsCounterService: ACReviewCallsCounter = ACReviewCallsCounterService()) {
-        self.init(rules: [rule], maxRequestCalls: maxRequestCalls, callsCounterService: callsCounterService)
+    public convenience init(rule: ACRequestReviewRule..., maxRequestCalls: Int? = nil, callsCounterService: ACReviewCallsCounter = ACReviewCallsCounterService()) {
+        self.init(rules: rule, maxRequestCalls: maxRequestCalls, callsCounterService: callsCounterService)
     }
     
-    open func setRule(_ rule: ACRequestReviewRule) {
-        self.rules = [rule]
-    }
-    
-    open func setRules(_ rules: [ACRequestReviewRule]) {
-        self.rules = rules
+    open func setRule(_ rule: ACRequestReviewRule...) {
+        self.rules = rule
     }
     
     // Check the conditions of all rules and call the review alert if at least one rule allows it
