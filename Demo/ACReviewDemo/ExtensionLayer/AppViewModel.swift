@@ -6,6 +6,6 @@
 //
 
 import Foundation
-import DPUIKit
+import UIKit
 
-class AppViewModel: DPViewModel {}
+class AppViewModel {}

@@ -25,8 +25,7 @@ open class ACReviewCallsCounterService: ACReviewCallsCounter {
     }
     
     open func getCurrentAttempts() -> Int {
-        let val: Int = userDefaults.get(forKey: attemptsKey) ?? 0
-        return val
+        userDefaults.get(forKey: attemptsKey) ?? 0
     }
     
     open func resetAttempts() {
